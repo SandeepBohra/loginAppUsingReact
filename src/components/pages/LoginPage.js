@@ -4,8 +4,8 @@ import LoginFormComponent from '../forms/LoginForm';
 class LoginPage extends React.Component{
     
 submit(email, pass){
-    console.log(email);
-    console.log(pass);
+    console.log("Email:::"+email);
+    console.log("Pass::"+pass);
 }
 
     render() {

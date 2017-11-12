@@ -4,39 +4,23 @@ import InLineError from '../messages/InLineError'
 import validator from 'validator';
 
 class LoginFormComponent extends Component {
-    state = {
-        /* data : {
-            email: "",
-            password: ""
-        }, */
-        email: "",
-        password: "",
-        //loading: false,
-        errors : {}
-    };
-/* onSubmit = () =>{
-    const errors = this.validate(this.state.data);
-    this.setState({ errors });
-    if (Object.keys(errors).length == 0){
-        this.props.submit(this.state.data);
-    }
-}
 
-validate = (data) => {
-    const errors = {};
-    if (!validator.isEmail(data.email)) errors.email = 'invalid email';
-    if (!data.password) errors.password = 'cant be blank';
-    return errors;
-} */
+    constructor(props){
+        super(props);
+        this.state =  {
+            email: "",
+            password: "",
+            errors : {}
+        }
+    }
+
+
 onSubmit = () =>{
     const innerData = {email: this.refs.email.value, password: this.refs.password.value};
-    const errors = this.validate(this.refs.email.value, this.refs.password.value);
-    this.setState({ errors });
-    if (Object.keys(errors).length == 0){
-        this.setState({
-            email : innerData.email,
-            password : innerData.password
-        })
+    const returnedErrors = this.validate(innerData.email, innerData.password);
+    Object.assign(this.state, {errors: returnedErrors});
+    if (Object.keys(this.state.errors).length == 0){
+        Object.assign(this.state, {email: innerData.email, password: innerData.password});
         this.props.submit(this.state.email, this.state.password);
     }
 }
@@ -45,6 +29,7 @@ validate = (argEmail, argPassword) => {
     const errors = {};
     if (!validator.isEmail(argEmail)) errors.email = 'invalid email';
     if (!argPassword) errors.password = 'cant be blank';
+    this.setState({ errors : errors });
     return errors;
 }
 
